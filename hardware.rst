@@ -1,8 +1,14 @@
 Hardware
 ========
+This is a collection of information about Sony's camera hardware.
+In some places, it may differ from what you can find elsewhere.
+However, we believe our information to be correct, as countless hours have been spent disassembling firmware and analyzing service manuals.
 
 BIONZ Image Processor
 ---------------------
+This system-on-chip (SoC) is the heart of the camera.
+On its ARM cores, it runs both Linux and the AV real time operating system (µITRON RTOS).
+
 +----------+-------------------+-----------+-------------------+-----------+----------------------------------------------------------+
 | Chip     | CPU Cores         | fwtool    | Name              | Released  | Cameras                                                  |
 +==========+===================+===========+===================+===========+==========================================================+
@@ -23,8 +29,22 @@ BIONZ Image Processor
 | CXD90057 | 4x ARM Cortex-A35 | \-        |                   | Jul. 2020 | ILCE-7SM3, ...                                           |
 +----------+-------------------+-----------+-------------------+-----------+----------------------------------------------------------+
 
+CXD90014 and CXD90045 are called "BIONZ X" by Sony, CXD90057 is called "BIONZ XR".
+
+The DRAM and NAND flash are usually combined in the same package (multi-chip package, MCP) and then stacked on top of the SoC (package-on-package, PoP).
+This is why the SoC package itself is never visible in disassembly photos.
+
+SA DSP
+^^^^^^
+The SA DSP core is included on-chip and shares memory with the ARM cores.
+It executes "sabin" programs.
+This seems to be a 32-bit CPU architecture featuring 16 registers and a custom instruction set.
+
 Power IC
 --------
+The "power IC" is responsible for starting up the BIONZ processor.
+It also manages the real time clock.
+
 +-------------+----------+--------------------+------------------------+
 | Chip        | Name     | Programmable Core  | Cameras                |
 +=============+==========+====================+========================+
@@ -45,8 +65,12 @@ Power IC
 | MB9AF004BGL | Darwin   | ARM Cortex-M3 core | ILCE-7, ILCE-6000, ... |
 +-------------+----------+--------------------+------------------------+
 
+Hibari and Piroshki are used together in some cases.
+
 Front-End (DFE)
 ---------------
+The DFE is optional and is placed between the image sensor and the SoC.
+
 +----------+---------+-------------------------+
 | Chip     | Name    | Cameras                 |
 +==========+=========+=========================+
@@ -61,8 +85,18 @@ Front-End (DFE)
 | CXD900?? | Leo     | ILCE-7M3, ...           |
 +----------+---------+-------------------------+
 
+Starting with CXD90016, the DFE has an integrated ARM core (firmware in dfe.bin).
+
+In some cases, the DFE has a private DRAM.
+With Leo, the DRAM is even stacked on top (PoP).
+
+Note: The RX10M2 includes a DFE (CXD90027), while the RX100M4 does not.
+However, they share the same image sensor and almost exactly the same capabilities, except for thermals.
+
 Codec
 -----
+The optional codec IC is used to boost the SoC's video capabilities.
+
 +---------+--------+-----------------------------+
 | Chip    | Name   | Cameras                     |
 +=========+========+=============================+
@@ -70,6 +104,29 @@ Codec
 +---------+--------+-----------------------------+
 | CXD4236 | Beaune | DSC-RX100M4, ILCE-7RM2, ... |
 +---------+--------+-----------------------------+
+
+These chips contain MIPS CPUs and software is developed using eSOL eBinder.
+There are always two binaries: "ipl" is the loader, which decompresses the actual application contained in the second binary.
+
+The following SoC / codec combinations exist:
+
++-------------------+-----------------+
+| SoC / Codec       | Max. Resolution |
++===================+=================+
+| CXD4108           | 480p (30fps)    |
++-------------------+-----------------+
+| CXD4115           | 720p (30fps)    |
++-------------------+-----------------+
+| CXD4115 + Annecy  | 1080p (30fps)   |
++-------------------+-----------------+
+| CXD4132           | 1080p (60fps)   |
++-------------------+-----------------+
+| CXD90014          | 1080p (60fps)   |
++-------------------+-----------------+
+| CXD90014 + Beaune | 4K (30fps)      |
++-------------------+-----------------+
+
+On the CXD90045, Beaune seems to be always present according to the firmware, but does not show up in the schematic, so it might be on-chip or in-package.
 
 Image Stabilization
 -------------------
