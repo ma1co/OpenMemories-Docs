@@ -42,6 +42,20 @@ The SA DSP core is included on-chip and shares memory with the ARM cores.
 It executes "sabin" programs.
 This seems to be a 32-bit CPU architecture featuring 16 registers and a custom instruction set.
 
+Secondary Image Processor
+^^^^^^^^^^^^^^^^^^^^^^^^^
+Some cameras have a secondary image processor placed between the sensor and BIONZ. It also runs a real time operating system (µITRON RTOS).
+
++----------+-------------------+---------+-----------+--------------------------+
+| Chip     | CPU Cores         | Name    | Released  | Cameras                  |
++==========+===================+=========+===========+==========================+
+| CXD4214  | 1x ARM926EJ       | Argus   | Jan. 2008 | DCR-SR220, HDR-UX20, ... |
++----------+-------------------+---------+-----------+--------------------------+
+| CXD4239  | 4x ARM Cortex-A5  | Rosetta | Apr. 2018 | PXW-Z280, PXW-FX9, ...   |
++----------+-------------------+---------+-----------+--------------------------+
+| CXD90058 | 4x ARM Cortex-A35 | Cetus   | Jul. 2020 | ILCE-7SM3, ...           |
++----------+-------------------+---------+-----------+--------------------------+
+
 Power IC
 --------
 The "power IC" is responsible for starting up the BIONZ processor.
