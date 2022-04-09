@@ -5,3 +5,4 @@ OpenMemories: Docs
    :caption: Contents
 
    hardware
+   devices
