@@ -35,6 +35,7 @@ Supported Devices
       out += '<th>Architecture</th>';
       out += '<th>App Support</th>';
       out += '<th>Updatershell Support</th>';
+      out += '<th>Serviceshell Support</th>';
       out += '</tr></thead><tbody>';
       Object.entries(devices).forEach(([k, v]) => {
         var key = v['arch'] + (v['key'] ? ('_' + v['key']) : '');
@@ -43,6 +44,7 @@ Supported Devices
         out += '<td>' + v['arch'] + '</td>';
         out += '<td>' + (v['apps'] ? ('&#10004; (' + v['apps'] + ')') : '&#10006;') + '</td>';
         out += '<td>' + ((v['model'] && updatershellKeys.indexOf(key) >= 0) ? '&#10004;' : '&#10006;') + '</td>';
+        out += '<td>&#10004;</td>';
         out += '</tr>';
       });
       out += '</tbody></table>';
