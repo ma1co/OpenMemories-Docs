@@ -116,6 +116,8 @@ The optional codec IC is used to boost the SoC's video capabilities.
 +---------+--------+-----------------------------+
 | Chip    | Name   | Cameras                     |
 +=========+========+=============================+
+| CXD4206 | Nice   | HDR-SR1, HDR-UX1, ...       |
++---------+--------+-----------------------------+
 | CXD4113 | Annecy | DSC-HX5, SLT-A33, ...       |
 +---------+--------+-----------------------------+
 | CXD4236 | Beaune | DSC-RX100M4, ILCE-7RM2, ... |
