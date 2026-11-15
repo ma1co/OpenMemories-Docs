@@ -56,6 +56,29 @@ Some cameras have a secondary image processor placed between the sensor and BION
 | CXD90058 | 4x ARM Cortex-A35 | Cetus   | Jul. 2020 | ILCE-7SM3, ...           |
 +----------+-------------------+---------+-----------+--------------------------+
 
+Debug Interface (SWD)
+---------------------
+On CXD90014 cameras the SoC's ARM CoreSight debug port is reachable over SWD.
+
+* ``DPIDR 0x3ba02477``
+* AP0: AHB-AP (``0x44770001``), physical memory access while the CPU keeps running
+* AP1: APB-AP (``0x24770002``), ROM table at ``0x80000000``, Cortex-A5 debug units at ``0x80110000``, ``0x80112000``, ``0x80114000``, ``0x80116000``
+
++-----------+----------------------------+---------------------------+
+| Camera    | SWCLK                      | SWDIO                     |
++===========+============================+===========================+
+| ILCE-7RM2 | CL1100 (IC6000 ball W25)   | CL1101 (IC6000 ball W26)  |
++-----------+----------------------------+---------------------------+
+
+Test points are on the main board SY-1058 (side A, left of IC6000). IO level is 3.15 V. Don't connect CL1102 (FIQ).
+
+Useful physical addresses on ILCE-7RM2 FW 4.01 (``PHYS_OFFSET 0x80000000``, kernel ``PAGE_OFFSET 0x40000000``):
+
+* ``0x834e0000``: ``klog``, a persistent copy of the kernel log (survives warm boots)
+* ``0x8345ffc0``: Android logger buffers (``log_main``, ``log_events``, ``log_radio``)
+
+Write-up with OpenOCD configs: https://github.com/PrintStructor/sony-cxd90014-swd-recovery
+
 Power IC
 --------
 The "power IC" is responsible for starting up the BIONZ processor.
